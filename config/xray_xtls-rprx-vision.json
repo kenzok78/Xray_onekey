@@ -32,7 +32,7 @@
       "streamSettings": {
         "network": "tcp",
         "security": "tls",
-        "xtlsSettings": {
+        "tlsSettings": {
           "minVersion": "1.2",
           "certificates": [
             {

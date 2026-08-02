@@ -9,6 +9,20 @@
 
 ### با توجه به احتمال مسدود شدن xtls، پیشنهاد می شود از نسخه پیشین Nginx استفاده کنید 
 
+### ❤️ حامیان مالی
+
+> می‌خواهید نام شما اینجا باشد؟ از طریق issue یا [گروه تلگرام](https://t.me/wulabing_v2ray) با من در تماس باشید
+
+<table>
+<tr>
+<td width="180"><a href="https://api.capybaracode.cc/register?aff=ENZE8PZ2VBDE"><img src="https://raw.githubusercontent.com/wulabing/xray_docker/master/image/sponsors/capybaracode.png" alt="CapybaraCode" width="150"></a></td>
+<td>با تشکر از <a href="https://api.capybaracode.cc/register?aff=ENZE8PZ2VBDE">CapybaraCode</a> برای حمایت از این پروژه — این نخستین حمایت مالی این پروژه است!<br>سرویس واسط API پایدار و کم‌تأخیر برای Claude Code و کدنویسی با هوش مصنوعی، آماده استفاده و با پرداخت بر اساس مصرف. با وارد کردن کد تخفیف <code>WULABING</code> هنگام ثبت‌نام، <b>4 دلار</b> اعتبار اضافه دریافت می‌کنید.</td>
+</tr>
+<tr>
+<td width="180"><a href="https://www.uhdnow.com/signup?invite=IMAX4K"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wulabing/xray_docker/master/image/sponsors/uhdnow-dark.png"><img src="https://raw.githubusercontent.com/wulabing/xray_docker/master/image/sponsors/uhdnow.png" alt="UHDNOW" width="150"></picture></a></td>
+<td>با تشکر از <a href="https://www.uhdnow.com/signup?invite=IMAX4K">UHDNOW</a> برای حمایت از این پروژه!<br>یک سرور خصوصی Emby که با دقت نگهداری می‌شود؛ آرشیو کاملی از نسخه‌های 4K / IMAX، Dolby Vision و HDR با پخش مستقیم و روان از چند مسیر. اگر به فیلم و سریال با کیفیت علاقه دارید، سر بزنید.</td>
+</tr>
+</table>
 
 ### گروه تلگرام
 * گروه ارتباطی تلگرام: https://t.me/wulabing_v2ray 
@@ -82,27 +96,15 @@ Nginx دایرکتوری： `/etc/nginx`
 
 certs： `/ssl/xray.key`（私钥）和 `/ssl/xray.crt`（证书公钥）
 
-### حمایت کردن
+### حمایت از این پروژه
 
-با خرید vps
+اگر می‌خواهید از من حمایت کنید، می‌توانید از طریق لینک‌های معرف (AFF) من سرور یا پروکسی بخرید:
 
-https://bandwagonhost.com/aff.php?aff=63939
+**سرور / پروکسی:** [BandwagonHost](https://bandwagonhost.com/aff.php?aff=63939) · [JustMySocks](https://justmysocks.net/members/aff.php?aff=17621) · [DMIT](https://www.dmit.io/aff.php?aff=3957) · [Nube.sh (پرداخت بر اساس مصرف)](https://nube.sh/invite/5986088028ENM0) · [Vultr](https://www.vultr.com/?ref=6881279)
 
-با خرید پروکسی
+**پروکسی خانگی socks5 / http:** [Proxy-Cheap](https://app.proxy-cheap.com/r/Pbqf9l) · [IPRoyal](https://iproyal.cn/?r=249487)
 
-https://justmysocks.net/members/aff.php?aff=17621
-
-با خرید vps
-
-https://www.dmit.io/aff.php?aff=3957
-
-با ایجاد حساب در vultr
-
-https://www.vultr.com/?ref=6881279
-
-حمایت با رمزارز
-
-TRC20:TFannfnajNGYsMTuVDcXfZXXPbcaxAEffa
+همچنین می‌توانید با USDT از من حمایت کنید، از پشتیبانی شما سپاسگزارم — TRC20: `TU8mLTPfa5Y9nmszyfyt2VRAtuZhdLexL8`
 
 
 ## Stargazers over time
