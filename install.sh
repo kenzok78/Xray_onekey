@@ -1033,8 +1033,9 @@ function basic_ws_information() {
   ws_link
 }
 
-# 赞助商与 AFF 展示，用于菜单头部与安装收尾。文案真源是 README.MD 的
-# 「❤️ 赞助商」与「支持这个项目」两节，改动时请一并同步（xray_docker 各 README 亦同）。
+# 赞助商与 AFF 展示，用于菜单头部与安装收尾。文案真源是 README_ZH.MD 的
+# 「❤️ 赞助商」与「支持这个项目」两节，改动时请一并同步 README.MD / README_FA.MD
+# 的对应章节（xray_docker 各 README 亦同）。
 # 刻意不放进 basic_information：菜单 23 查看配置链接时不应跟着展示推广。
 function show_support() {
   echo -e "\n${Blue}──────────────────── 支持本项目 ────────────────────${Font}"

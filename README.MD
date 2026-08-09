@@ -1,44 +1,47 @@
+**English** | [简体中文](README_ZH.MD) | [فارسی](README_FA.MD)
 
-## Xray 基于 Nginx 的 VLESS + XTLS 一键安装脚本 <img src="https://raw.githubusercontent.com/wulabing/Xray_onekey/main/image/project_xray.jpg" alt="Project_Xray" width="122" height="30" align="bottom" />
+## Xray VLESS + XTLS One-Click Installation Script (Nginx-based) <img src="https://raw.githubusercontent.com/wulabing/Xray_onekey/main/image/project_xray.jpg" alt="Project_Xray" width="122" height="30" align="bottom" />
 
-
-> 感谢 JetBrains 提供的非商业开源软件开发授权！
 
 > Thanks for non-commercial open source development authorization by JetBrains!
 
-## 由于 Nginx 前置导致的嵌套 tls 可能会出现连接阻断 目前更推荐使用 reality ，建议移步到以下地址
+## Nested TLS caused by placing Nginx in front may lead to connection blocking. REALITY is now the recommended option — please head to the address below
+
 https://github.com/wulabing/xray_docker
 
-## ❤️ 赞助商
+## ❤️ Sponsors
 
-> 想出现在这里？欢迎通过 issue 或 [Telegram 群组](https://t.me/wulabing_v2ray) 联系我
+> Want to appear here? Feel free to reach out via an issue or the [Telegram group](https://t.me/wulabing_v2ray)
 
 <table>
 <tr>
 <td width="180"><a href="https://api.capybaracode.cc/register?aff=ENZE8PZ2VBDE"><img src="https://raw.githubusercontent.com/wulabing/xray_docker/master/image/sponsors/capybaracode.png" alt="CapybaraCode" width="150"></a></td>
-<td>感谢 <a href="https://api.capybaracode.cc/register?aff=ENZE8PZ2VBDE">CapybaraCode</a> 赞助本项目 —— 这是本项目收到的第一笔赞助，感谢这份认可！<br>稳定、低延迟的 Claude Code / AI 编码 API 中转服务，开箱即用、按量计费，日常写代码足够顺手。注册时填写优惠码 <code>WULABING</code> 可额外获得 <b>4 美元</b>额度。</td>
+<td>Thanks to <a href="https://api.capybaracode.cc/register?aff=ENZE8PZ2VBDE">CapybaraCode</a> for sponsoring this project — the very first sponsorship this project has received, and I truly appreciate the recognition!<br>A stable, low-latency API relay service for Claude Code / AI coding. Works out of the box, pay-as-you-go, and smooth enough for daily coding work. Enter the promo code <code>WULABING</code> when signing up to get an extra <b>$4</b> in credit.</td>
 </tr>
 <tr>
 <td width="180"><a href="https://www.uhdnow.com/signup?invite=IMAX4K"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wulabing/xray_docker/master/image/sponsors/uhdnow-dark.png"><img src="https://raw.githubusercontent.com/wulabing/xray_docker/master/image/sponsors/uhdnow.png" alt="UHDNOW" width="150"></picture></a></td>
-<td>感谢 <a href="https://www.uhdnow.com/signup?invite=IMAX4K">UHDNOW</a> 赞助本项目！<br>一个用心维护的 Emby 私服，4K / IMAX 原盘、杜比视界与 HDR 片源齐全，多线路直连、拖拉即播，喜欢折腾影音的朋友可以去看看。</td>
+<td>Thanks to <a href="https://www.uhdnow.com/signup?invite=IMAX4K">UHDNOW</a> for sponsoring this project!<br>A carefully maintained private Emby server with a full catalogue of 4K / IMAX remuxes, Dolby Vision and HDR sources, multiple direct-connect routes and instant seeking. Worth a look if you are into home media.</td>
 </tr>
 </table>
 
-### Telegram 群组
-* Telegram 交流群：https://t.me/wulabing_v2ray 
-* Telegram 更新公告频道：https://t.me/wulabing_channel
+### Telegram Groups
 
-### 准备工作
-* 准备一个域名，并将 A 记录添加好；
-* 安装好 `wget`。
+* Telegram discussion group: https://t.me/wulabing_v2ray
+* Telegram update announcement channel: https://t.me/wulabing_channel
 
-### 导入链接规范
+### Prerequisites
+
+* Prepare a domain name and add its A record;
+* Have `wget` installed.
+
+### Import Link Specification
+
 https://github.com/XTLS/Xray-core/issues/91
 
 
-### 安装/更新方式（Nginx 前置）
+### Installation / Update (Nginx in front)
 
-支持配置方式
+Supported configurations
 
 - VLESS + TCP + TLS + Nginx + WebSocket
 
@@ -46,95 +49,95 @@ https://github.com/XTLS/Xray-core/issues/91
 wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/wulabing/Xray_onekey/nginx_forward/install.sh" && chmod +x install.sh && bash install.sh
 ```
 
-### 安装/更新方式（Xray 前置）
+### Installation / Update (Xray in front)
 
-支持配置方式
+Supported configurations
 
-- VLESS + TCP + TLS + Nginx（流控 `xtls-rprx-vision`）
+- VLESS + TCP + TLS + Nginx (flow control `xtls-rprx-vision`)
 
-- VLESS + TCP + TLS + Nginx（流控 `xtls-rprx-vision`）及 VLESS + TCP + TLS + Nginx + WebSocket 回落并存模式
+- VLESS + TCP + TLS + Nginx (flow control `xtls-rprx-vision`) plus VLESS + TCP + TLS + Nginx + WebSocket fallback coexistence mode
 
 ```
 wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/wulabing/Xray_onekey/main/install.sh" && chmod +x install.sh && bash install.sh
 ```
 
 
-### 注意事项
-* 如果你不了解脚本中各项设置的具体含义，除域名外，请使用脚本提供的默认值；
-* 使用本脚本需要你拥有 Linux 基础及使用经验，了解计算机网络部分知识，计算机基础操作；
-* 群主仅提供极其有限的支持，如有问题可以询问群友。
+### Notes
 
-### 支持的系统
+* If you do not understand what a given setting in the script means, use the default value provided by the script for everything except the domain name;
+* Using this script requires Linux fundamentals and hands-on experience, some knowledge of computer networking, and basic computer skills;
+* The maintainer provides only very limited support. If you run into problems, feel free to ask other members in the group.
 
-| 发行版 | 版本要求 | 备注 |
+### Supported Systems
+
+| Distribution | Version requirement | Notes |
 | --- | --- | --- |
-| Debian | 10+ | 推荐 Debian 12 / 13 |
+| Debian | 10+ | Debian 12 / 13 recommended |
 | Ubuntu | 20.04+ | |
 | Rocky Linux | 8+ | |
 | AlmaLinux | 8+ | |
 | Oracle Linux | 7+ | |
-| CentOS | 7+ / Stream | **CentOS 7 已于 2024-06-30 EOL**，官方源已迁移至 vault.centos.org，脚本会打印警告后继续，依赖安装可能失败，建议更换发行版 |
+| CentOS | 7+ / Stream | **CentOS 7 reached EOL on 2024-06-30.** Official repositories have moved to vault.centos.org; the script prints a warning and continues, but dependency installation may fail. Switching to another distribution is recommended |
 
-### 已知限制
+### Known Limitations
 
-* **WebSocket 传输已被 Xray 标记为弃用。** 自 [Xray-core v26.1.23](https://github.com/XTLS/Xray-core/releases/tag/v26.1.23) 起，使用 ws 传输时启动日志会打印弃用警告（`The feature WebSocket transport (with ALPN http/1.1, etc.) is deprecated, not recommended for using and might be removed.`），未来版本可能移除。该警告在日志文件建立之前输出，因此只能在 `journalctl -u xray` 中看到，不会出现在 `/var/log/xray/error.log`。
-* 本脚本采用 Nginx 前置 + 嵌套 TLS 的结构，存在被针对性阻断的可能。长期建议迁移到 REALITY / XHTTP，见 [wulabing/xray_docker](https://github.com/wulabing/xray_docker)。
+* **The WebSocket transport has been marked as deprecated by Xray.** Since [Xray-core v26.1.23](https://github.com/XTLS/Xray-core/releases/tag/v26.1.23), using the ws transport prints a deprecation warning in the startup log (`The feature WebSocket transport (with ALPN http/1.1, etc.) is deprecated, not recommended for using and might be removed.`), and it may be removed in a future release. This warning is emitted before the log file is created, so it is only visible in `journalctl -u xray` and never appears in `/var/log/xray/error.log`.
+* This script uses an Nginx-in-front + nested TLS structure, which can be targeted and blocked. Migrating to REALITY / XHTTP is recommended for the long run — see [wulabing/xray_docker](https://github.com/wulabing/xray_docker).
 
-### 本次维护版修复说明（v1.4.0）
+### Fixes in This Maintenance Release (v1.4.0)
 
-> **存量用户请特别注意**：如果你的节点是 v1.3.11 及更早版本安装的，其入站 **TLS 配置实际未加载任何证书**，客户端无法完成 TLS 握手。请重新安装，或手动把 `/usr/local/etc/xray/config.json` 里的 `"xtlsSettings"` 改名为 `"tlsSettings"` 后 `systemctl restart xray`。
+> **Important notice for existing users**: if your node was installed with v1.3.11 or earlier, its inbound **TLS configuration never actually loaded any certificate**, so clients cannot complete the TLS handshake. Please reinstall, or manually rename `"xtlsSettings"` to `"tlsSettings"` in `/usr/local/etc/xray/config.json` and then run `systemctl restart xray`.
 
-* **修复入站 TLS 未加载证书（致命）**：配置模板中的 `xtlsSettings` 自 Xray-core v1.8.1 起已不再是合法字段，JSON 未知字段被静默忽略，导致 `security: "tls"` 落到一份空 TLS 配置上、`certificates` 从未生效。已改名为 `tlsSettings`。
-* **修复非 443 端口下证书续期必然失败**：原先靠按行号 `sed` 临时改写 Nginx 配置来放行 `/.well-known/acme-challenge/`，常态下 80 端口对该路径也无条件 301 到 https，续期只能靠 CA 跟随重定向落到 443 才侥幸成功；一旦用菜单 13 改过端口即 100% 失败。现改为在 Nginx 中常驻该 location，签发与续期与 Xray 监听端口无关。签发失败时也不再残留被注释的配置行。
-* **修复域名 IP 校验永久误报**：`ipget.net` 已返回 403，改用 `dig` 查询 A / AAAA 记录，无 `dig` 时回退 `getent`。
-* **证书权限**：续期 `--reloadcmd` 中一并修正 `/ssl` 属主，避免续期后 Xray 读不到证书；属主取自 systemd 单元的 `User=`；修正已弃用的 `chown user.group` 点号语法及漏掉 `/ssl` 目录自身的问题。
-* **acme.sh**：安装后执行 `--upgrade --auto-upgrade`，避免老版本因 CA API 变动而续期失败。
-* **安装收尾自检**：新增 `xray run -test` 与 `nginx -t` 校验，失败即报错退出。
-* **配置模板内嵌进脚本**：不再在安装过程中从 GitHub 拉取 `config/*.json`、`web.conf`、`nginx.repo`，避免网络波动导致装出半成品。
-* **兼容性**：新增 Rocky Linux / AlmaLinux / CentOS Stream 支持；`nginx >= 1.25.1` 改用 `http2 on;` 指令；`jq` 兜底下载按 CPU 架构选择 amd64 / arm64；IPv6 Only 机器的 DNS64 配置改为追加写入而非覆盖 `/etc/resolv.conf`；各处网络请求补齐超时，GitHub 不可达时不再卡住菜单。
-* **分享链接**：移除早已失效的 `security=xtls` 链接与二维码，补齐 `encryption=none` / `type` / `sni` / `host` 参数，WebSocket 路径改用 urlencode（多级路径不再被拼错）。
+* **Fixed the inbound TLS not loading any certificate (critical)**: `xtlsSettings` in the configuration template has not been a valid field since Xray-core v1.8.1. Unknown JSON fields are silently ignored, so `security: "tls"` fell back to an empty TLS configuration and `certificates` never took effect. The field has been renamed to `tlsSettings`.
+* **Fixed certificate renewal always failing on non-443 ports**: the previous approach temporarily rewrote the Nginx configuration by line number with `sed` to allow `/.well-known/acme-challenge/`. Under normal conditions port 80 also unconditionally 301-redirects that path to https, so renewal only succeeded by luck when the CA followed the redirect to 443; once the port had been changed via menu item 13 it failed 100% of the time. That location is now permanently present in Nginx, making issuance and renewal independent of the port Xray listens on. Commented-out configuration lines are no longer left behind when issuance fails.
+* **Fixed the permanently false-positive domain IP check**: `ipget.net` now returns 403. The check uses `dig` to query A / AAAA records, falling back to `getent` when `dig` is unavailable.
+* **Certificate permissions**: the renewal `--reloadcmd` now also fixes ownership of `/ssl`, so Xray can still read the certificate after renewal; the owner is taken from `User=` in the systemd unit. Also fixed the deprecated `chown user.group` dot syntax and the omission of the `/ssl` directory itself.
+* **acme.sh**: `--upgrade --auto-upgrade` is executed after installation, preventing renewal failures caused by CA API changes on older versions.
+* **Post-install self-check**: added `xray run -test` and `nginx -t` validation; the script errors out and exits on failure.
+* **Configuration templates embedded in the script**: `config/*.json`, `web.conf` and `nginx.repo` are no longer fetched from GitHub during installation, so network hiccups can no longer produce a half-installed setup.
+* **Compatibility**: added support for Rocky Linux / AlmaLinux / CentOS Stream; `nginx >= 1.25.1` now uses the `http2 on;` directive; the `jq` fallback download picks amd64 / arm64 based on CPU architecture; on IPv6-only machines the DNS64 configuration is appended to `/etc/resolv.conf` instead of overwriting it; timeouts were added to network requests everywhere, so the menu no longer hangs when GitHub is unreachable.
+* **Share links**: removed the long-broken `security=xtls` links and QR codes, added the missing `encryption=none` / `type` / `sni` / `host` parameters, and the WebSocket path is now urlencoded (multi-level paths are no longer mangled).
 
-### 鸣谢
+### Acknowledgements
 
-* 本脚本中 README Project_Xray 项目图片由 Blitzcrank Telegram:@Blitz_crank 提供 在此感谢Blitzcrank
-* 本脚本中 MTProxyTLS 基于 https://github.com/sunpma/mtp 二次修改 在此感谢 sunpma；
-* 本脚本中 锐速 4 合 1 脚本原项目引用 https://www.94ish.me/1635.html 在此感谢；
-* 本脚本中 锐速 4 合 1 脚本修改版项目引用 https://github.com/ylx2016/Linux-NetSpeed 在此感谢 ylx2016；
-* 本脚本中 配置文件及部分逻辑参考 https://github.com/jiuqi9997/xray-yes 在此感谢 玖柒；
-* 本脚本中 二维码 API 部分参考 https://github.com/mack-a/v2ray-agent  在此感谢 mack-a。
+* The Project_Xray image in this README was provided by Blitzcrank (Telegram: @Blitz_crank) — many thanks to Blitzcrank;
+* The MTProxyTLS part of this script is a modified version of https://github.com/sunpma/mtp — thanks to sunpma;
+* The original 4-in-1 LotServer script is referenced from https://www.94ish.me/1635.html — thanks;
+* The modified 4-in-1 LotServer script is referenced from https://github.com/ylx2016/Linux-NetSpeed — thanks to ylx2016;
+* The configuration files and part of the logic reference https://github.com/jiuqi9997/xray-yes — thanks to 玖柒;
+* The QR code API part references https://github.com/mack-a/v2ray-agent — thanks to mack-a.
 
-### 启动方式
+### Service Control
 
-启动 Xray：`systemctl start xray`
+Start Xray: `systemctl start xray`
 
-停止 Xray：`systemctl stop xray`
+Stop Xray: `systemctl stop xray`
 
-启动 Nginx：`systemctl start nginx`
+Start Nginx: `systemctl start nginx`
 
-停止 Nginx：`systemctl stop nginx`
+Stop Nginx: `systemctl stop nginx`
 
-### 相关目录
+### Relevant Paths
 
-Web 目录：`/www/xray_web`
+Web directory: `/www/xray_web`
 
-Xray 服务端配置：`/usr/local/etc/xray/config.json`
+Xray server configuration: `/usr/local/etc/xray/config.json`
 
-Nginx 目录： `/etc/nginx`
+Nginx directory: `/etc/nginx`
 
-证书文件： `/ssl/xray.key`（私钥）和 `/ssl/xray.crt`（证书公钥）
+Certificate files: `/ssl/xray.key` (private key) and `/ssl/xray.crt` (public certificate)
 
-## 支持这个项目
+## Support This Project
 
-如果您想支持我，可以走我的 AFF 购买服务器 / 代理：
+If you would like to support me, you can buy servers / proxies through my affiliate links:
 
-**服务器 / 代理：** [搬瓦工](https://bandwagonhost.com/aff.php?aff=63939) · [JustMySocks](https://justmysocks.net/members/aff.php?aff=17621) · [DMIT](https://www.dmit.io/aff.php?aff=3957) · [Nube.sh（按量付费）](https://nube.sh/invite/5986088028ENM0) · [Vultr](https://www.vultr.com/?ref=6881279)
+**Servers / proxies:** [BandwagonHost](https://bandwagonhost.com/aff.php?aff=63939) · [JustMySocks](https://justmysocks.net/members/aff.php?aff=17621) · [DMIT](https://www.dmit.io/aff.php?aff=3957) · [Nube.sh (pay-as-you-go)](https://nube.sh/invite/5986088028ENM0) · [Vultr](https://www.vultr.com/?ref=6881279)
 
-**socks5 / http 家宽代理：** [Proxy-Cheap](https://app.proxy-cheap.com/r/Pbqf9l) · [IPRoyal](https://iproyal.cn/?r=249487)
+**socks5 / http residential proxies:** [Proxy-Cheap](https://app.proxy-cheap.com/r/Pbqf9l) · [IPRoyal](https://iproyal.cn/?r=249487)
 
-也可以通过 USDT 支持我，感谢您的支持 —— TRC20：`TU8mLTPfa5Y9nmszyfyt2VRAtuZhdLexL8`
+You can also support me with USDT — thank you for your support — TRC20: `TU8mLTPfa5Y9nmszyfyt2VRAtuZhdLexL8`
 
 
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/wulabing/Xray_onekey.svg)](https://starchart.cc/wulabing/Xray_onekey)
-
