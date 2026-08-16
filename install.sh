@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 ERROR="${Red}[ERROR]${Font}"
 
 # 变量
-shell_version="1.4.0"
+shell_version="1.4.1"
 github_branch="main"
 xray_conf_dir="/usr/local/etc/xray"
 nginx_conf_dir="/etc/nginx/conf.d"
@@ -259,18 +259,19 @@ function dependency_install() {
   ${INS} systemd
   judge "安装/升级 systemd"
 
+  # nginx 走官方源二进制安装，不再需要 pcre / zlib / openssl 的开发包。
+  # Debian 13 已移除 libpcre3-dev，保留这些包会让整条 apt 失败，连带 openssl 也装不上。
+  # openssl 命令本身仍被 generate_certificate 用于校验自签名证书，需保留。
+  ${INS} openssl
+
   if [[ "${ID}" == "centos" ]]; then
-    ${INS} pcre pcre-devel zlib-devel epel-release openssl openssl-devel
-  elif [[ ${os_family} == "rhel" ]]; then
-    ${INS} pcre pcre-devel zlib-devel openssl openssl-devel
-    if [[ "${ID}" == "ol" ]]; then
-      # Oracle Linux 不同日期版本的 VERSION_ID 比较乱 直接暴力处理。如出现问题或有更好的方案，请提交 Issue。
-      ${INS} dnf-plugins-core >/dev/null 2>&1
-      yum-config-manager --enable ol7_developer_EPEL >/dev/null 2>&1
-      yum-config-manager --enable ol8_developer_EPEL >/dev/null 2>&1
-    fi
-  else
-    ${INS} libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev
+    # epel-release 提供 jq
+    ${INS} epel-release
+  elif [[ "${ID}" == "ol" ]]; then
+    # Oracle Linux 不同日期版本的 VERSION_ID 比较乱 直接暴力处理。如出现问题或有更好的方案，请提交 Issue。
+    ${INS} dnf-plugins-core >/dev/null 2>&1
+    yum-config-manager --enable ol7_developer_EPEL >/dev/null 2>&1
+    yum-config-manager --enable ol8_developer_EPEL >/dev/null 2>&1
   fi
 
   ${INS} jq
@@ -312,6 +313,11 @@ function basic_optimization() {
   # 最大文件打开数
   sed -i '/^\*\ *soft\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
   sed -i '/^\*\ *hard\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
+  # 部分发行版的 limits.conf 末尾没有换行符，直接追加会把新行拼到上一行末尾，
+  # 既破坏原有限制，也让上面按行首匹配的 sed 清理失效（重复安装会不断累积）
+  if [[ -s /etc/security/limits.conf && -n $(tail -c1 /etc/security/limits.conf) ]]; then
+    echo >>/etc/security/limits.conf
+  fi
   echo '* soft nofile 65536' >>/etc/security/limits.conf
   echo '* hard nofile 65536' >>/etc/security/limits.conf
 
@@ -391,11 +397,19 @@ function port_exist_check() {
   else
     print_error "检测到 $1 端口被占用，以下为 $1 端口占用信息"
     lsof -i:"$1"
-    print_error "5s 后将尝试自动 kill 占用进程"
-    sleep 5
-    lsof -i:"$1" | awk '{print $2}' | grep -v "PID" | xargs kill -9
-    print_ok "kill 完成"
-    sleep 1
+    # 直接 kill -9 会把 nginx.service 打成 failed 状态，占用者是 nginx 时优先走 systemd 优雅停止
+    if lsof -i:"$1" | grep -qi nginx; then
+      systemctl stop nginx >/dev/null 2>&1
+      print_ok "已停止占用 $1 端口的 nginx 服务"
+      sleep 1
+    fi
+    if [[ 0 -ne $(lsof -i:"$1" | grep -i -c "listen") ]]; then
+      print_error "5s 后将尝试自动 kill 占用进程"
+      sleep 5
+      lsof -i:"$1" | awk '{print $2}' | grep -v "PID" | xargs kill -9
+      print_ok "kill 完成"
+      sleep 1
+    fi
   fi
 }
 function update_sh() {
@@ -1086,8 +1100,28 @@ function ssl_renew() {
 }
 
 function bbr_boost_sh() {
-  [ -f "tcp.sh" ] && rm -rf ./tcp.sh
-  wget -N --no-check-certificate "https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+  local tcp_sh="./tcp.sh"
+  local tcp_sh_url="https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcp.sh"
+
+  rm -f "${tcp_sh}"
+  if ! wget --no-check-certificate --connect-timeout=5 --timeout=30 -O "${tcp_sh}" "${tcp_sh_url}"; then
+    print_error "第三方 TCP 加速脚本下载失败：${tcp_sh_url}"
+    rm -f "${tcp_sh}"
+    return 1
+  fi
+
+  # 上游 master 曾在重写仓库历史期间短暂回退为 chiakge 原版(v1.4.0)脚本，执行前校验来源
+  if ! grep -q "ylx2016/Linux-NetSpeed" "${tcp_sh}"; then
+    print_error "下载到的 tcp.sh 不是 ylx2016 修改版，可能是上游仓库异常，已放弃执行"
+    print_error "如需自行确认，请检查 ${tcp_sh_url}"
+    rm -f "${tcp_sh}"
+    return 1
+  fi
+
+  local tcp_sh_ver
+  tcp_sh_ver=$(grep -m1 '^sh_ver=' "${tcp_sh}" | awk -F '"' '{print $2}')
+  print_ok "第三方 TCP 加速脚本版本：${tcp_sh_ver:-未知}（来源 ylx2016/Linux-NetSpeed）"
+  bash "${tcp_sh}"
 }
 
 function mtproxy_sh() {

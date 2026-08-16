@@ -81,6 +81,13 @@ wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.c
 * **WebSocket 传输已被 Xray 标记为弃用。** 自 [Xray-core v26.1.23](https://github.com/XTLS/Xray-core/releases/tag/v26.1.23) 起，使用 ws 传输时启动日志会打印弃用警告（`The feature WebSocket transport (with ALPN http/1.1, etc.) is deprecated, not recommended for using and might be removed.`），未来版本可能移除。该警告在日志文件建立之前输出，因此只能在 `journalctl -u xray` 中看到，不会出现在 `/var/log/xray/error.log`。
 * 本脚本采用 Nginx 前置 + 嵌套 TLS 的结构，存在被针对性阻断的可能。长期建议迁移到 REALITY / XHTTP，见 [wulabing/xray_docker](https://github.com/wulabing/xray_docker)。
 
+### 修复说明（v1.4.1）
+
+* **修复 Debian 13 依赖安装失败**（[#487](https://github.com/wulabing/Xray_onekey/issues/487)）：Debian 13 已移除 `libpcre3-dev`，而脚本仍在一条 `apt install` 里安装它，导致整条命令失败、同行的 `openssl` 等包一并装不上。这批 pcre / zlib / openssl 开发包是早年编译安装 Nginx 时代的遗留，当前 Nginx 走官方源二进制安装，早已用不到，现已全部删除。
+* **端口占用检测不再强杀 Nginx**（[#469](https://github.com/wulabing/Xray_onekey/issues/469)）：原先检测到 80 端口被占用会直接 `kill -9`，若占用者是正在运行的 Nginx，会把 `nginx.service` 打成 `failed (Result: signal)` 状态。现改为优先 `systemctl stop nginx` 优雅停止，仍未释放才回退到 `kill -9`。
+* **修复 `limits.conf` 被写坏**：若 `/etc/security/limits.conf` 末尾没有换行符（部分发行版与云镜像如此），脚本追加的 `* soft nofile 65536` 会直接拼到上一行末尾，既破坏原有限制，又让按行首匹配的清理逻辑失效——重复安装会不断累积垃圾行，且文件打开数优化实际从未生效。现在追加前会补齐换行。
+* **BBR 加速脚本增加来源校验**（[#490](https://github.com/wulabing/Xray_onekey/issues/490)）：上游 `ylx2016/Linux-NetSpeed` 仓库异常时可能下发旧版脚本，现在执行前会校验脚本来源并打印其版本号，校验不通过则放弃执行。
+
 ### 本次维护版修复说明（v1.4.0）
 
 > **存量用户请特别注意**：如果你的节点是 v1.3.11 及更早版本安装的，其入站 **TLS 配置实际未加载任何证书**，客户端无法完成 TLS 握手。请重新安装，或手动把 `/usr/local/etc/xray/config.json` 里的 `"xtlsSettings"` 改名为 `"tlsSettings"` 后 `systemctl restart xray`。
